@@ -1,6 +1,22 @@
 # SohrLiker
 Автоматизированный пролайк сохранненных фотографий
 
+# Установка 
+### Установка Python 3.7.0
+  Скачать - [Python](https://www.python.org/ftp/python/3.7.0/python-3.7.0-amd64.exe)   
+  Установить. Добавить Python в Path.
+
+### Установка VK и Colorama
+   **Вводить в консоли (win+r -> cmd)**
+   ```
+   pip install vk
+   ```
+   ```
+   pip install colorama
+   ```
+
+
+
 # Настройка
 ### Получение access_token
   Перейди по ссылке - [vk.com](https://oauth.vk.com/authorize?client_id=6812123&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=photos,wall,offline&response_type=token&v=5.92&state=123456)  
