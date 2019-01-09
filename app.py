@@ -17,6 +17,9 @@
 # (*)	-)Отправка отчета									(*)
 # (*)														(*)
 # (*)		(*)		(*)		(*)		(*)		(*)		(*)		(*)
+
+
+
 import vk
 import time
 from colorama import Fore, Back, Style
@@ -74,16 +77,18 @@ class Sohrliker():
 
         return photos
 
-    def Action(ID, p, offset):
+    def Action(ID, p, offset, mID):
         Max = p['count']
         Counter = offset
-        CaptchaLim = int(Counter) + 48
+        # CaptchaLim = int(Counter) + 48
         Liked = 0
         Counter = int(Counter)
-        print(Counter)
-        print(CaptchaLim)
+        # print(Counter)
+        # print(CaptchaLim)
         try:
             while Counter < Max:
+
+
                 # if Counter == CaptchaLim:
                 #     CaptchaLim = int(CaptchaLim) + 48
                 #     time.sleep(120)
@@ -106,7 +111,7 @@ class Sohrliker():
         return Liked
 
     li = GetPhotosList(ID)
-    finaly = Action(ID, li, offset)
+    finaly = Action(ID, li, offset, mID)
 
     print('Успешно пролайкано -', finaly)
 
