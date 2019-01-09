@@ -1,10 +1,5 @@
 # SohrLiker
-<<<<<<< HEAD
-Автоматизированный пролайк сохранненных фотографий
-![preview](https://i.imgur.com/FI2mvtK.png)
-=======
 Автоматизированный пролайк сохранненных фотографий   
->>>>>>> 78f2de07679f20b6aedf9c08115fd1d526742b58
 
 ![preview](https://i.imgur.com/FI2mvtK.png)
 
