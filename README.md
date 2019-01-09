@@ -1,5 +1,6 @@
 # SohrLiker
 Автоматизированный пролайк сохранненных фотографий
+![preview](https://i.imgur.com/FI2mvtK.png)
 
 # Установка 
 ### Установка Python 3.7.0
@@ -13,7 +14,7 @@
    ```
    ```
    pip install colorama
-   ```
+   ``` 
 
 
 
