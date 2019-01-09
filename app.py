@@ -19,7 +19,7 @@
 # (*)		(*)		(*)		(*)		(*)		(*)		(*)		(*)
 import vk
 import time
-from colorama import Fore, Back, Style
+# from colorama import Fore, Back, Style
 ###################################################################################
 mID = "" # ОБЯЗАТЕЛЬНО УКАЗАТЬ СВОЙ ID В ВК!
 access_token = "" #ОБЯЗАТЕЛЬНО УКАЗАТЬ СВОЙ ТОКЕН! КАК ЕГО ПОЛУЧИТЬ ЧИТАТЬ В Readme
@@ -31,21 +31,14 @@ api = vk.API(session)
 
 
 class Sohrliker():
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "                                                     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + Fore.WHITE + "                 SohrLiker By Finskiy                " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "                                                     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
+    print("(*)    (*)    (*)    (*)    (*)    (*)    (*)    (*)")
+    print("(*)                                              (*)")
+    print("(*)                    SOHRLIKER                 (*)")
+    print("(*)                                              (*)")
+    print("(*)    (*)    (*)    (*)    (*)    (*)    (*)    (*)")
 
-    print(Fore.BLUE + 'Введите ID')
-    ID = input()
-    print(Fore.GREEN + 'Введите Offset')
-    offset = input()
+    ID = input('Введите ID  ')
+    offset = input('Введите Offset  ')
     if offset == "":
         offset = 0
 
