@@ -1,51 +1,33 @@
-# (*)		(*)		(*)		(*)		(*)		(*)		(*)		(*)
-# (*)														(*)
-# (*)			SohrLiker By Finskiy    					(*)
-# (*)	Возможности продукта:								(*)
-# (*)	Автоматический пролайк всех сохр. 					(*)
-# (*)	Статистика 											(*)
-# (*)	       												(*)
-# (*)														(*)
-# (*)														(*)
-# (*)														(*)
-# (*)	+)Инициализация VkApi								(*)
-# (*)	+)Передача ID аккаунта								(*)
-# (*)	+)Получение всех сохраненных фото аккаунта - п.2	(*)
-# (*)	+)Проверка - лайкнуто ли фото						(*)
-# (*)	+)Если лайкнуто, то пропуск							(*)
-# (*)	+)Просчет лайкнутых									(*)
-# (*)	-)Отправка отчета									(*)
-# (*)														(*)
-# (*)		(*)		(*)		(*)		(*)		(*)		(*)		(*)
-
+# ver 0.11beta | first stable | with captcha limit
 
 import vk
+import sys
 import time
+import math
 from colorama import Fore, Back, Style
+from vk.exceptions import VkAPIError
 
 ###################################################################################
-mID = ""  # ОБЯЗАТЕЛЬНО УКАЗАТЬ СВОЙ ID В ВК!
-access_token = ""  # ОБЯЗАТЕЛЬНО УКАЗАТЬ СВОЙ ТОКЕН! КАК ЕГО ПОЛУЧИТЬ ЧИТАТЬ В Readme
+mID = "****"  # ОБЯЗАТЕЛЬНО УКАЗАТЬ СВОЙ ID В ВК!
+access_token = "****"  # ОБЯЗАТЕЛЬНО УКАЗАТЬ СВОЙ ТОКЕН! КАК ЕГО ПОЛУЧИТЬ ЧИТАТЬ В Readme
 ###################################################################################
 session = vk.Session(access_token=access_token)
 api = vk.API(session)
 
 
-# https://oauth.vk.com/authorize?client_id=6812123&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=photos,wall,offline&response_type=token&v=5.92&state=123456
-
-
 class Sohrliker():
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "                                                     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + Fore.WHITE + "                 SohrLiker By Finskiy                " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "                                                     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-    print(
-        Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")" + "     " + Fore.RED + "(" + Fore.GREEN + "*" + Fore.RED + ")")
-
+    print(Fore.GREEN + """   _____ ____  __  ______  __    ______ __ __________ 
+  / ___// __ \/ / / / __ \/ /   /  _/ //_// ____/ __ 
+  \__ \/ / / / /_/ / /_/ / /    / // ,<  / __/ / /_/ /
+ ___/ / /_/ / __  / _, _/ /____/ // /| |/ /___/ _, _/ 
+/____/\____/_/ /_/_/ |_/_____/___/_/ |_/_____/_/ |_|  
+                                                      
+             ____   _____         __                  
+            / __ \ <  / /_  ___  / /_____ _           
+           / / / / / / __ \/ _ \/ __/ __ `/           
+          / /_/ / / / /_/ /  __/ /_/ /_/ /            
+          \____(_)_/_.___/\___/\__/\__,_/             
+                                                      """)
     print(Fore.BLUE + 'Введите ID')
     ID = input()
     print(Fore.GREEN + 'Введите Offset')
@@ -63,8 +45,12 @@ class Sohrliker():
         else:
             id = id.replace('id', '')
         return int(id)
+    try:
+        ID = getUserId(ID)
+    except Exception:
+        print("Ошибка! Проверьте правильность access_token и mID")
+        sys.exit()
 
-    ID = getUserId(ID)
 
     def GetPhotosList(ID):
         an = api.users.get(user_ids=ID, v=5.92)
@@ -75,24 +61,27 @@ class Sohrliker():
         cnt = str(photos['count'])
         print(af + " " + al)
         print("Кол-во сохраненок - " + cnt)
+        print("Ожидается 'прогонов' " + str(math.ceil(int(cnt)/50)))
 
         return photos
 
     def Action(ID, p, offset, mID):
         Max = p['count']
         Counter = offset
-        # CaptchaLim = int(Counter) + 48
+        CaptchaLim = int(Counter) + 49
         Liked = 0
         Counter = int(Counter)
         # print(Counter)
         # print(CaptchaLim)
         try:
-            while Counter < Max:
+            while Counter <= Max:
 
-                # if Counter == CaptchaLim:
-                #     CaptchaLim = int(CaptchaLim) + 48
-                #     time.sleep(120)
-                # Попытка обойти каптчу
+                if Counter == CaptchaLim:
+                     CaptchaLim = int(CaptchaLim) + 48
+                     print(Fore.RED + "Пауза 200 секунд")
+                     print(Fore.GREEN)
+                     time.sleep(200)
+
 
                 time.sleep(0.5)  # обход лимита на запросы :)
                 pid = p["items"][Counter]["id"]
@@ -105,15 +94,20 @@ class Sohrliker():
                 if a['liked'] == 1:
                     print(pid, '- Уже лайкнул')
                     Counter = Counter + 1
+        except IndexError:
+            print("Работа завершена!")
+
         except Exception as e:
             print("Captcha!!! Try again later with offset - ", Fore.RED, Counter)
 
         except KeyboardInterrupt:
             print("Программа остановлена вручную (ctrl+c)")
 
+
         return Liked
 
     li = GetPhotosList(ID)
+
     finaly = Action(ID, li, offset, mID)
 
     print(Fore.WHITE, 'Успешно пролайкано -', Fore.GREEN, finaly)
