@@ -3,7 +3,7 @@
 
 ![preview](https://i.imgur.com/FI2mvtK.png)
 
-
+# Корректная работа визуальной части гарантированна только в [ConEmu](http://conemu.ru/ru/)
 # Установка 
 ### Установка Python 3.7.0
   Скачать - [Python](https://www.python.org/ftp/python/3.7.0/python-3.7.0-amd64.exe)   
