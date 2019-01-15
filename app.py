@@ -4,16 +4,48 @@ import vk
 import sys
 import time
 import math
+import os
 from colorama import Fore, Back, Style
 from vk.exceptions import VkAPIError
 
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
+
+config = configparser.ConfigParser()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+path = os.path.join(BASE_DIR, "config.ini")
+
+
+
+def createConfig(path, a, b):
+    """
+    Create a config file
+    """
+    config = configparser.ConfigParser()
+    config.add_section("Config")
+    config.set("Config", "access_token", a)
+    config.set("Config", "mID", b)
+    
+    with open(path, "w") as config_file:
+        config.write(config_file)
+
+if not os.path.exists(path):
+    os.system('start https://vk.cc/8VlNxj')
+    a = input('Введите access_token\n')
+    os.system('start http://regvk.com/id/')
+    b = input('Введите ВАШ численный vkID\n')
+    createConfig(path, a, b)
+
 ###################################################################################
-mID = "****"  # ОБЯЗАТЕЛЬНО УКАЗАТЬ СВОЙ ID В ВК!
-access_token = "****"  # ОБЯЗАТЕЛЬНО УКАЗАТЬ СВОЙ ТОКЕН! КАК ЕГО ПОЛУЧИТЬ ЧИТАТЬ В Readme
+config.read(path)
+mID = config.get("Config", "mID")
+access_token = config.get("Config", "access_token")
+print(mID, "  ", access_token )
 ###################################################################################
 session = vk.Session(access_token=access_token)
 api = vk.API(session)
-
 
 class Sohrliker():
     print(Fore.GREEN + """   _____ ____  __  ______  __    ______ __ __________ 
@@ -92,7 +124,7 @@ class Sohrliker():
                     Counter = Counter + 1
                     Liked = Liked + 1
                 if a['liked'] == 1:
-                    print(pid, '- Уже лайкнул')
+                    print(pid, '- Пропуск')
                     Counter = Counter + 1
         except IndexError:
             print("Работа завершена!")
